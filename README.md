@@ -1,6 +1,6 @@
 # Jot::Ruby
 
-Ruby wrapper for Joshua Tauberer's JOT project – an operational transform (OT) javascript library. For now it is just a direct proxy to original implementation using Execjs (you may use any runtime you like, but I recommend mini_racer https://github.com/discourse/mini_racer).
+Ruby wrapper for Joshua Tauberer's JOT project (https://github.com/JoshData/jot) – an operational transform (OT) javascript library. For now it is just a direct proxy to original implementation using Execjs (you may use any runtime you like, but I recommend mini_racer https://github.com/discourse/mini_racer).
 
 ## Installation
 
