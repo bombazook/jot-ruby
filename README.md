@@ -1,13 +1,14 @@
 # Jot::Ruby
 
-Ruby adapter for Joshua Tauberer's JOT project – an operational transform (OT) javascript library. For now it is just a direct proxy to original implementation using Execjs (you may use any runtime you like, but I recommend mini_racer https://github.com/discourse/mini_racer).
+Ruby wrapper for Joshua Tauberer's JOT project – an operational transform (OT) javascript library. For now it is just a direct proxy to original implementation using Execjs (you may use any runtime you like, but I recommend mini_racer https://github.com/discourse/mini_racer).
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this lines to your application's Gemfile:
 
 ```ruby
 gem 'jot-ruby'
+gem 'mini_racer' # or 'therubyracer' for example
 ```
 
 And then execute:
@@ -25,12 +26,12 @@ require 'jot/ruby'
 ```
 
 ### Basic JOT operations
-- NO_OP                    # Creates operation does nothing
-- SET and LIST             # General purpose operations
-- MATH                     # Math ops
-- SPLICE, ATINDEX, MAP     # Stings and Arrays
-- PUT, REM, APPLY          # Object operations
-- COPY                     # May not work as expected at this time according to https://github.com/JoshData/jot/issues/12
+- NO_OP - Creates operation that does nothing
+- SET and LIST – General purpose operations
+- MATH - Math ops
+- SPLICE, ATINDEX, MAP - Strings and Arrays ops
+- PUT, REM, APPLY - Object operations
+- COPY - May not work as expected at this time according to https://github.com/JoshData/jot/issues/12
 
 ```ruby
 # creating a new operation
@@ -38,22 +39,22 @@ Jot::Ruby.PUT("0", "1")
 ```
 
 ### General purpose methods
-- opFromJSON                # Creates an operation declared in json form
-- deserialize               # Creates an operation using it's serialized form
-- diff                      # Creates a coplex op describes a list of operations to transform one object into another
+- opFromJSON - Creates an operation declared in json form
+- deserialize - Creates an operation using it's serialized form
+- diff - Creates a coplex op describes a list of operations to transform one object into another
 ```ruby
 Jot::Ruby.diff({a: 1}, {b: 2}) # Returns an operation instance
 ```
 
 ### Operation instance methods
-isNoOp                      # Returns true or false according to op's functionalify
-toJSON                      # Returns a json view of operation
-apply                       # Gets an object and returns it's updated version
-serialize                   # Returns serialized version of operation
-simplify                    # Tries to reduce operation complexity
-drilldown                   # Returns operation describing it's subset ongiven key or index
-compose                     # Composes an operation with another one and returns another operation (i.e. LIST operation)
-rebase                      # receives another operation and raise an exception if there is a conflict, or may additionally receive initial version of document as second argument to make a conflictless rebase
+- isNoOp - Returns true or false according to op's functionalify
+- toJSON - Returns a json view of operation
+- apply - Gets an object and returns it's updated version
+- serialize - Returns serialized version of operation
+- simplify - Tries to reduce operation complexity
+- drilldown - Returns operation describing it's subset ongiven key or index
+- compose - Composes an operation with another one and returns another operation (i.e. LIST operation)
+- rebase - receives another operation and raise an exception if there is a conflict, or may additionally receive initial version of document as second argument to make a conflictless rebase
 
 ```ruby
 op = jot.LIST([jot.APPLY("title", jot.SPLICE(5, 3, "small")), jot.APPLY("count", jot.MATH('add', -10))])
@@ -64,9 +65,17 @@ op.apply({title: "It's big", count: 20}) # => {"title"=>"It's small", "count"=>1
 Use same arguments format as original implementation does
 For example, LIST operation receives an Array but not a list of arguments
 ```ruby
-Jot::Ruby.LIST([Jot::Ruby.APPLY("title", Jot::Ruby.SPLICE(0, 5, "It's small")), Jot::Ruby.APPLY("count", Jot::Ruby.MATH("add", 10))]) # Works as expected
-Jot::Ruby.LIST(Jot::Ruby.APPLY("title", Jot::Ruby.SPLICE(0, 5, "It's small")), Jot::Ruby.APPLY("count", Jot::Ruby.MATH("add", 10)))   # Raises an Jot::Ruby::Errors::ImplError exception
+Jot::Ruby.LIST([
+    Jot::Ruby.APPLY("title", Jot::Ruby.SPLICE(0, 5, "It's small")), 
+    Jot::Ruby.APPLY("count", Jot::Ruby.MATH("add", 10))
+]) # Works as expected
+Jot::Ruby.LIST(
+    Jot::Ruby.APPLY("title", Jot::Ruby.SPLICE(0, 5, "It's small")), 
+    Jot::Ruby.APPLY("count", Jot::Ruby.MATH("add", 10))
+)  # Raises a Jot::Ruby::Errors::ImplError exception
 ```
+
+#### For further docs read https://github.com/JoshData/jot readme
 
 ## Development
 
