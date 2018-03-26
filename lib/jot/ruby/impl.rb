@@ -3,13 +3,9 @@ module Jot
     module Impl
       class << self
         def init
-          if Jot::Ruby::Impl.const_defined? :Native
-            Jot::Ruby.impl = Jot::Ruby::Impl::Native.new
-          else
-            require 'jot/ruby/impl/js'
-            Jot::Ruby.impl = Jot::Ruby::Impl::Js.new
-          end
-          raise NotImplementedError unless Jot::Ruby.impl
+          impl_const = Jot::Ruby::Impl.constants.first
+          raise NoImplError unless impl_const
+          Jot::Ruby.impl = Jot::Ruby::Impl.const_get(impl_const).new
           Operation.include Jot::Ruby.impl.class::OperationMethods
         end
       end

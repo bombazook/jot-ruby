@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["bombazook@gmail.com"]
 
   spec.summary       = %q{ruby adapter for JOT OT-library protocol}
-  spec.description   = %q{ruby adapter for JOT OT-library protocol. By default original Joshua Tauberer Operational Transform library impl throuugh execjs}
+  spec.description   = %q{ruby adapter for JOT OT-library protocol. Js implementation is available under GPLv3 license}
   spec.homepage      = "https://github.com/bombazook/jot-ruby"
   spec.license       = "MIT"
 

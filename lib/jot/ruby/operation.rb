@@ -1,7 +1,7 @@
 module Jot
   module Ruby
     class Operation < SimpleDelegator
-      RAW_RESULT_METHODS = %i[isNoOp toJSON apply serialize].freeze
+      RAW_RESULT_METHODS = %i[isNoOp toJSON apply serialize inspect].freeze
       OPERATION_RESULT_METHODS = %i[simplify drilldown compose rebase].freeze
       DEFAULT_METHODS = RAW_RESULT_METHODS + OPERATION_RESULT_METHODS
 

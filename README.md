@@ -1,14 +1,14 @@
 # Jot::Ruby
 
-Ruby wrapper for Joshua Tauberer's JOT project (https://github.com/JoshData/jot) – an operational transform (OT) javascript library. For now it is just a direct proxy to original implementation using Execjs (you may use any runtime you like, but I recommend mini_racer https://github.com/discourse/mini_racer).
+Library connecting JOT implementations and ruby runtime
 
 ## Installation
 
 Add this lines to your application's Gemfile:
 
 ```ruby
-gem 'jot-ruby'
 gem 'mini_racer' # or 'therubyracer' for example
+gem 'jot-ruby-js' # available under GPLv3 license, you may use your own implementation instead
 ```
 
 And then execute:
