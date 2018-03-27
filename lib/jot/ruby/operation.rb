@@ -8,15 +8,17 @@ module Jot
       extend Utils::Snippets
       not_implemented DEFAULT_METHODS
 
-      OPERATION_RESULT_METHODS.each do |method_name|
-        define_method method_name do |*args|
-          Operation.new(super(*args))
+      module Prepender
+        OPERATION_RESULT_METHODS.each do |method_name|
+          define_method method_name do |*args|
+            self.class.new(super(*args))
+          end
         end
-      end
 
-      RAW_RESULT_METHODS.each do |method_name|
-        define_method method_name do |*args|
-          super(*args)
+        RAW_RESULT_METHODS.each do |method_name|
+          define_method method_name do |*args|
+            super(*args)
+          end
         end
       end
     end
