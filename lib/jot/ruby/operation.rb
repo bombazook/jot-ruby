@@ -6,19 +6,17 @@ module Jot
       DEFAULT_METHODS = RAW_RESULT_METHODS + OPERATION_RESULT_METHODS
 
       extend Utils::Snippets
-      not_implemented DEFAULT_METHODS
+      not_implemented *DEFAULT_METHODS
 
-      module Prepender
-        OPERATION_RESULT_METHODS.each do |method_name|
-          define_method method_name do |*args|
-            self.class.new(super(*args))
-          end
+      OPERATION_RESULT_METHODS.each do |method_name|
+        define_method method_name do |*args|
+          self.class.new(super(*args))
         end
+      end
 
-        RAW_RESULT_METHODS.each do |method_name|
-          define_method method_name do |*args|
-            super(*args)
-          end
+      RAW_RESULT_METHODS.each do |method_name|
+        define_method method_name do |*args|
+          super(*args)
         end
       end
     end
