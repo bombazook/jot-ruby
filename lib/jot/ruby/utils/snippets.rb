@@ -3,13 +3,14 @@ module Jot
     module Utils
       module Snippets
         def not_implemented(*method_names)
-          include Module.new do
+          not_implemented_module = Module.new do
             method_names.each do |method_name|
               define_method method_name do |*_args|
                 raise NotImplementedError, method_name
               end
             end
           end
+          include not_implemented_module
         end
 
         def gem_root

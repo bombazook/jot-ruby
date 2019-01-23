@@ -2,23 +2,6 @@
 
 Library connecting JOT implementations and ruby runtime
 
-## Installation
-
-Add this lines to your application's Gemfile:
-
-```ruby
-gem 'mini_racer' # or 'therubyracer' for example
-gem 'jot-ruby-js' # available under GPLv3 license, you may use your own implementation instead
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install jot-ruby
-
 ## Usage
 
 ```ruby
@@ -31,7 +14,7 @@ require 'jot/ruby'
 - MATH - Math ops
 - SPLICE, ATINDEX, MAP - Strings and Arrays ops
 - PUT, REM, APPLY - Object operations
-- COPY - May not work as expected at this time according to https://github.com/JoshData/jot/issues/12
+- COPY
 
 ```ruby
 # creating a new operation
@@ -58,7 +41,7 @@ Jot::Ruby.diff({a: 1}, {b: 2}) # Returns an operation instance
 
 ```ruby
 op = jot.LIST([jot.APPLY("title", jot.SPLICE(5, 3, "small")), jot.APPLY("count", jot.MATH('add', -10))])
-op.apply({title: "It's big", count: 20}) # => {"title"=>"It's small", "count"=>10} 
+op.apply({title: "It's big", count: 20}) # => {"title"=>"It's small", "count"=>10}
 ```
 
 ### Additional info
@@ -66,16 +49,14 @@ Use same arguments format as original implementation does
 For example, LIST operation receives an Array but not a list of arguments
 ```ruby
 Jot::Ruby.LIST([
-    Jot::Ruby.APPLY("title", Jot::Ruby.SPLICE(0, 5, "It's small")), 
+    Jot::Ruby.APPLY("title", Jot::Ruby.SPLICE(0, 5, "It's small")),
     Jot::Ruby.APPLY("count", Jot::Ruby.MATH("add", 10))
 ]) # Works as expected
 Jot::Ruby.LIST(
-    Jot::Ruby.APPLY("title", Jot::Ruby.SPLICE(0, 5, "It's small")), 
+    Jot::Ruby.APPLY("title", Jot::Ruby.SPLICE(0, 5, "It's small")),
     Jot::Ruby.APPLY("count", Jot::Ruby.MATH("add", 10))
 )  # Raises a Jot::Ruby::Errors::ImplError exception
 ```
-
-#### For further docs read https://github.com/JoshData/jot readme
 
 ## Development
 

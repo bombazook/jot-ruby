@@ -24,7 +24,12 @@ module Jot
       def self.operation_class
         @operation_class ||= begin
           klass = Class.new(Operation)
-          klass.include self::OperationMethods
+          if self.constants.include? :OperationMethods
+            klass.include self::OperationMethods
+          else
+            raise Errors::NoImplError, "impl has no OperationMethods module"
+          end
+          klass.prepend Operation::OriginalOperationMethods
           klass
         end
       end
